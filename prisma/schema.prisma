@@ -23,19 +23,21 @@ model Aluno {
 model Turma {
   id     Int     @id @default(autoincrement())
   nome   String  @db.VarChar(40)
-  alunos Aluno[]
-  cursos Curso[]
+  aluno   Aluno[]
+  alunos  Curso_Turma[]
 }
 
 model Curso {
   id     Int     @id @default(autoincrement())
   nome   String  @db.VarChar(40)
-  turmas Turma[]
+  turmas  Curso_Turma[]
 }
 
 model Professor {
   id   Int    @id @default(autoincrement())
   nome String @db.VarChar(60)
+ 
+  solicitacao   Solicitacao[]
 }
 
 model Objeto {
@@ -50,6 +52,27 @@ model Pc {
 model Solicitacao {
   id              Int @id @default(autoincrement())
   descricao       String @db.VarChar(60)
-  data_hora_entra DateTime 
-  data_hora_saida DateTime
+  hora_entra      DateTime
+  hora_saida      DateTime
+  professor       Professor  @relation(fields: [professor_id], references: [id])
+  professor_id    Int 
+
+
+}
+
+model Acesso {
+  id              Int   @id @default(autoincrement())
+  descricao       String @db.VarChar(60)
+  data_hora_entra DateTime
+  data_hora_saida DateTime 
+}
+
+model Curso_Turma {
+  id         Int    @default(autoincrement())
+  periodo  String @db.VarChar(60)
+  curso    Curso @relation(fields: [cursoId], references: [id])
+  cursoId  Int
+  turma    Turma @relation(fields: [turmaId], references: [id])
+  turmaId  Int
+  @@id([id, cursoId, turmaId])
 }
