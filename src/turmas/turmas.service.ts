@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTurmaDto } from './dto/create-turma.dto';
 import { UpdateTurmaDto } from './dto/update-turma.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class TurmasService {
+
+  constructor(private prisma: PrismaService) {}
+
   create(createTurmaDto: CreateTurmaDto) {
     return 'This action adds a new turma';
   }

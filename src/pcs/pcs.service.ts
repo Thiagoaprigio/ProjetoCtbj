@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePcDto } from './dto/create-pc.dto';
 import { UpdatePcDto } from './dto/update-pc.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class PcsService {
+
+  constructor(private prisma: PrismaService) {}
+
   create(createPcDto: CreatePcDto) {
     return 'This action adds a new pc';
   }

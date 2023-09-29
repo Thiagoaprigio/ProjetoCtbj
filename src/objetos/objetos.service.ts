@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { CreateObjetoDto } from './dto/create-objeto.dto';
 import { UpdateObjetoDto } from './dto/update-objeto.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ObjetosService {
+
+  constructor(private prisma: PrismaService) {}
+
   create(createObjetoDto: CreateObjetoDto) {
     return 'This action adds a new objeto';
   }

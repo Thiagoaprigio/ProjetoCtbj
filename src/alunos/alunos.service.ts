@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAlunoDto } from './dto/create-aluno.dto';
 import { UpdateAlunoDto } from './dto/update-aluno.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class AlunosService {
+
+  constructor(private prisma: PrismaService) {}
+
   create(createAlunoDto: CreateAlunoDto) {
     return 'This action adds a new aluno';
   }
