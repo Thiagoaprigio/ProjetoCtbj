@@ -13,66 +13,73 @@ datasource db {
 // prisma/schema.prisma
 
 model Aluno {
-  id        Int    @id @default(autoincrement())
-  nome      String @db.VarChar(60)
-  matricula Int    @unique
-  turma     Turma  @relation(fields: [turma_id], references: [id])
-  turma_id  Int
+  id         Int    @id @default(autoincrement())
+  nome       String @db.VarChar(60)
+  matricula  Int    @unique
+  turmas     Turma  @relation(fields: [turma_id], references: [id])
+  turma_id   Int
 }
 
 model Turma {
-  id     Int     @id @default(autoincrement())
-  nome   String  @db.VarChar(40)
-  aluno   Aluno[]
-  alunos  Curso_Turma[]
+  id      Int     @id @default(autoincrement())
+  nome    String  @db.VarChar(40)
+  alunos  Aluno[]
+  cursos  Curso_Turma[]
 }
 
 model Curso {
-  id     Int     @id @default(autoincrement())
-  nome   String  @db.VarChar(40)
+  id      Int     @id @default(autoincrement())
+  nome    String  @db.VarChar(40)
   turmas  Curso_Turma[]
 }
 
 model Professor {
-  id   Int    @id @default(autoincrement())
-  nome String @db.VarChar(60)
+  id    Int     @id @default(autoincrement())
+  nome  String  @db.VarChar(60)
  
-  solicitacao   Solicitacao[]
+  solicitacoes   Solicitacao[]
 }
 
 model Objeto {
-  id   Int    @id @default(autoincrement())
-  nome String @db.VarChar(60)
+  id    Int      @id @default(autoincrement())
+  nome  String   @db.VarChar(60)
+  pc        Pc  @relation(fields: [pc_id], references: [id])
+  pc_id   Int
+  
+  solicitacoes   Solicitacao[]
 }
 
 model Pc {
-  id Int @id @default(autoincrement())
+  id    Int  @id @default(autoincrement())
+  objetos Objeto []
 }
 
 model Solicitacao {
-  id              Int @id @default(autoincrement())
-  descricao       String @db.VarChar(60)
-  hora_entra      DateTime
+  id              Int     @id @default(autoincrement())
+  descricao       String  @db.VarChar(60)
+  hora_entrada    DateTime
   hora_saida      DateTime
   professor       Professor  @relation(fields: [professor_id], references: [id])
   professor_id    Int 
-
-
+  objeto       Objeto  @relation(fields: [objeto_id], references: [id])
+  objeto_id       Int
+  aluno           String  @db.VarChar(60)
 }
 
 model Acesso {
-  id              Int   @id @default(autoincrement())
-  descricao       String @db.VarChar(60)
-  data_hora_entra DateTime
-  data_hora_saida DateTime 
+  id                Int     @id @default(autoincrement())
+  descricao         String  @db.VarChar(60)
+  data_hora_entrada DateTime
+  data_hora_saida   DateTime
+  aluno             String  @db.VarChar(60)
 }
 
 model Curso_Turma {
   id         Int    @default(autoincrement())
-  periodo  String @db.VarChar(60)
-  curso    Curso @relation(fields: [cursoId], references: [id])
-  cursoId  Int
-  turma    Turma @relation(fields: [turmaId], references: [id])
-  turmaId  Int
-  @@id([id, cursoId, turmaId])
+  periodo  String   @db.VarChar(60)
+  cursos    Curso   @relation(fields: [curso_id], references: [id])
+  curso_id  Int
+  turmas    Turma   @relation(fields: [turma_id], references: [id])
+  turma_id  Int
+  @@id([id, curso_id, turma_id])
 }
