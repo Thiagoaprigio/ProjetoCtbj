@@ -22,6 +22,12 @@ export class CursosController {
     return this.cursosService.findOne(+id);
   }
 
+  @Get(':id/turmas')
+  getTurmasPorCurso(@Param('id') id: string) {
+    console.log('passou')
+    return this.cursosService.getTurmasPorCurso(+id);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCursoDto: UpdateCursoDto) {
     return this.cursosService.update(+id, updateCursoDto);

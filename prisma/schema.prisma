@@ -16,10 +16,13 @@ model Aluno {
   id           Int           @id @default(autoincrement())
   nome         String        @db.VarChar(60)
   matricula    Int           @unique
-  turma       Turma         @relation(fields: [turma_id], references: [id])
+  turma        Turma         @relation(fields: [turma_id], references: [id])
   turma_id     Int
   solicitacoes Solicitacao[]
   acesso       Acesso[]
+  // email    senha *
+  email        String        @unique
+  senha        String
 }
 
 model Turma {
@@ -31,7 +34,7 @@ model Turma {
 
 model Curso {
   id     Int           @id @default(autoincrement())
-  nome   String        @db.VarChar(40)
+  nome   String        @unique @db.VarChar(40)
   turmas Curso_Turma[]
 }
 
@@ -57,27 +60,32 @@ model Pc {
 }
 
 model Solicitacao {
-  id               Int       @id @default(autoincrement())
-  descricao        String    @db.VarChar(60)
+  id                    Int       @id @default(autoincrement())
+  descricao             String    @db.VarChar(60)
   data_hora_entrada     DateTime
   data_hora_saida       DateTime
-  data_hora_solicitacao      DateTime
-  professor        Professor @relation(fields: [professor_id], references: [id])
-  professor_id     Int
-  objeto           Objeto    @relation(fields: [objeto_id], references: [id])
-  objeto_id        Int
-  aluno            Aluno     @relation(fields: [aluno_id], references: [id])
-  aluno_id         Int
+  data_hora_solicitacao DateTime
+  professor             Professor @relation(fields: [professor_id], references: [id])
+  professor_id          Int
+  objeto                Objeto    @relation(fields: [objeto_id], references: [id])
+  objeto_id             Int
+  aluno                 Aluno     @relation(fields: [aluno_id], references: [id])
+  aluno_id              Int
+  created_at            DateTime  @default(now()) @db.Timestamp(0)
+  acesso                Acesso[]
+
+  /// vincular acesso a solicitação
 }
 
 model Acesso {
-  id                Int      @id @default(autoincrement())
-  descricao         String   @db.VarChar(60)
+  id                Int         @id @default(autoincrement())
+  descricao         String      @db.VarChar(60)
   data_hora_entrada DateTime
   data_hora_saida   DateTime
-  aluno    Aluno  @relation(fields: [aluno_id], references: [id])
+  aluno             Aluno       @relation(fields: [aluno_id], references: [id])
   aluno_id          Int
-
+  solicitacao       Solicitacao @relation(fields: [solicitacao_id], references: [id])
+  solicitacao_id    Int
 }
 
 model Curso_Turma {

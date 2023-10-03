@@ -9,17 +9,18 @@ export class TurmasService {
   constructor(private prisma: PrismaService) {}
 
   create(createTurmaDto: CreateTurmaDto) {
-    return 'This action adds a new turma';
+    return this.prisma.turma.create({data: createTurmaDto});
   }
 
   findAll() {
-    return `This action returns all turmas`;
+    return this.prisma.turma.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} turma`;
+    return this.prisma.turma.findUnique({
+      where: {id: idTurma}
+    });
   }
-
   update(id: number, updateTurmaDto: UpdateTurmaDto) {
     return `This action updates a #${id} turma`;
   }
