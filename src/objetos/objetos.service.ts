@@ -17,7 +17,8 @@ export class ObjetosService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} objeto`;
+    return this.prisma.objeto.findMany({
+  })
   }
 
   update(id: number, updateObjetoDto: UpdateObjetoDto) {

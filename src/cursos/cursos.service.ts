@@ -5,8 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class CursosService {
-
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   create(createCursoDto: CreateCursoDto) {
     return this.prisma.curso.create({ data: createCursoDto });
@@ -19,12 +18,12 @@ export class CursosService {
           select: {
             turma: {
               select: {
-                nome: true
-              }
-            }
-          }
-        }
-      }
+                nome: true,
+              },
+            },
+          },
+        },
+      },
     });
   }
 
@@ -34,30 +33,29 @@ export class CursosService {
       include: {
         turmas: {
           select: {
-            turma: true
-          }
-        }
-      }
+            turma: true,
+          },
+        },
+      },
     });
   }
 
   findOne(idCurso: number) {
-
     return this.prisma.curso.findUnique({
       where: { id: idCurso },
-    })
+    });
   }
 
   update(id: number, updateCursoDto: UpdateCursoDto) {
     return this.prisma.curso.update({
       where: { id: id },
-      data: updateCursoDto
+      data: updateCursoDto,
     });
   }
 
   remove(id: number) {
     return this.prisma.curso.delete({
-      where: { id: id }
+      where: { id: id },
     });
   }
 }

@@ -5,7 +5,6 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class SolicitacoesService {
-
   constructor(private prisma: PrismaService) {}
 
   create(createSolicitacoeDto: CreateSolicitacoeDto) {
@@ -14,6 +13,15 @@ export class SolicitacoesService {
 
   findAll() {
     return `This action returns all solicitacoes`;
+  }
+  TodasDescricao() {
+    return this.prisma.solicitacao.findMany({
+          select: {
+            descricao: true,
+          
+        
+      },
+    });
   }
 
   findOne(id: number) {

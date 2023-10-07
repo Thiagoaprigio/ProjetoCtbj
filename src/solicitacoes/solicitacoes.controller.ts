@@ -20,6 +20,12 @@ export class SolicitacoesController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.solicitacoesService.findOne(+id);
+
+  }
+
+  @Get('descricao')
+  descricao() {
+    return this.solicitacoesService.TodasDescricao();
   }
 
   @Patch(':id')

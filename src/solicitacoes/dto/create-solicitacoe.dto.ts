@@ -1,1 +1,7 @@
-export class CreateSolicitacoeDto {}
+import { ApiProperty } from "@nestjs/swagger";
+export class CreateSolicitacoeDto {
+    @ApiProperty({required: true}) 
+    descricao : string;
+    
+   
+}
