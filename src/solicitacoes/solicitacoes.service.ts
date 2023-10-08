@@ -12,13 +12,12 @@ export class SolicitacoesService {
   }
 
   findAll() {
-    return `This action returns all solicitacoes`;
+    return this.prisma.solicitacao.findMany({});
   }
   TodasDescricao() {
     return this.prisma.solicitacao.findMany({
           select: {
-            descricao: true,
-          
+            descricao: true
         
       },
     });

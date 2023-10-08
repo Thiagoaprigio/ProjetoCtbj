@@ -27,13 +27,24 @@ export class ProfessoresService {
     });
   }
 
-  /* obterSolicitacaoProfessor() {
+    /*obterSolicitacaoProfessor() {
     return this.prisma.professor.findFirst({
-    
-        
-      },
-    });
-  }*/
+      include: {
+        solicitacoes: {
+          where:{
+            status: 'aceito',
+          
+        }
+      }
+      
+      
+    },
+  });
+}
+*/
+
+
+
 
   findOnee(idProfessor: number) {
     return this.prisma.professor.findUnique({

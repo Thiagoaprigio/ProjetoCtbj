@@ -40,40 +40,47 @@ model Curso {
 
 model Professor {
   id   Int    @id @default(autoincrement())
-  nome String @db.VarChar(60) 
+  nome String @db.VarChar(60)
 
   solicitacoes Solicitacao[]
 }
 
 model Objeto {
-  id    Int   @id @default(autoincrement())
-  nome  String? @db.VarChar(60)
-  pc    Pc     @relation(fields: [pc_id], references: [id])
-  pc_id Int
+  id           Int           @id @default(autoincrement())
+  nome         String?       @db.VarChar(60)
+  pc           Pc            @relation(fields: [pc_id], references: [id])
+  pc_id        Int
   solicitacoes Solicitacao[]
 }
 
 model Pc {
-  id      Int     @id @default(autoincrement())
+  id      Int      @id @default(autoincrement())
   objetos Objeto[]
 }
 
 model Solicitacao {
-  id                    Int       @id @default(autoincrement())
-  descricao             String    @db.VarChar(60)
-  data_hora_entrada     DateTime
-  data_hora_saida       DateTime
-  professor             Professor @relation(fields: [professor_id], references: [id])
-  professor_id          Int
-  objeto                Objeto?   @relation(fields: [objeto_id], references: [id]) // Especificando fields e references
-  objeto_id             Int?      // Tornando o campo objeto_id opcional
-  aluno                 Aluno     @relation(fields: [aluno_id], references: [id])
-  aluno_id              Int
-  created_at            DateTime  @default(now()) @db.Timestamp(0)
-  acesso                Acesso[]
+  id                Int       @id @default(autoincrement())
+  descricao         String    @db.VarChar(60)
+  data_hora_entrada DateTime
+  data_hora_saida   DateTime
+  status            Status?
+  professor         Professor @relation(fields: [professor_id], references: [id])
+  professor_id      Int
+  objeto            Objeto?   @relation(fields: [objeto_id], references: [id]) // Especificando fields e references
+  objeto_id         Int? // Tornando o campo objeto_id opcional
+  aluno             Aluno     @relation(fields: [aluno_id], references: [id])
+  aluno_id          Int
+  created_at        DateTime  @default(now()) @db.Timestamp(0)
+  acesso            Acesso[]
+  
+
 }
 
-
+ enum Status {
+  PENDENTE
+  APROVADA
+  REJEITADA
+}
 
 model Acesso {
   id                Int         @id @default(autoincrement())

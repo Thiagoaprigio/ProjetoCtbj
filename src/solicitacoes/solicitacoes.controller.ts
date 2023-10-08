@@ -23,8 +23,8 @@ export class SolicitacoesController {
 
   }
 
-  @Get('descricao')
-  descricao() {
+  @Get(':descricao')
+  TodasDescricao() {
     return this.solicitacoesService.TodasDescricao();
   }
 
