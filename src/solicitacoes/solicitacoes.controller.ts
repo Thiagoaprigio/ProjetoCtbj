@@ -10,6 +10,7 @@ export class SolicitacoesController {
   @Post()
   create(@Body() createSolicitacoeDto: CreateSolicitacoeDto) {
     return this.solicitacoesService.create(createSolicitacoeDto);
+    
   }
 
   @Get()
@@ -22,10 +23,19 @@ export class SolicitacoesController {
     return this.solicitacoesService.findOne(+id);
 
   }
+  @Get('status')
+  teste() {
+    return this.solicitacoesService.Situacao();
+  }
+  @Get('datas')
+  TodasDatas() {
+    return this.solicitacoesService.TodasDatas();
+  }
+  
 
-  @Get(':descricao')
-  TodasDescricao() {
-    return this.solicitacoesService.TodasDescricao();
+  @Get('descricao')
+  todasDescricao() {
+    return this.solicitacoesService. todasDescricao();
   }
 
   @Patch(':id')

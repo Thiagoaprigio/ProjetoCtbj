@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateObjetoDto } from './dto/create-objeto.dto';
 import { UpdateObjetoDto } from './dto/update-objeto.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Objeto } from './entities/objeto.entity';
 
 @Injectable()
 export class ObjetosService {
@@ -9,23 +10,30 @@ export class ObjetosService {
   constructor(private prisma: PrismaService) {}
 
   create(createObjetoDto: CreateObjetoDto) {
-    return 'This action adds a new objeto';
-  }
 
+
+  }
   findAll() {
-    return `This action returns all objetos`;
+    return this.prisma.objeto.findMany();
   }
 
-  findOne(id: number) {
-    return this.prisma.objeto.findMany({
-  })
-  }
 
+  findOne(idObjeto: number) {
+    return this.prisma.objeto.findUnique({
+      where: {id:idObjeto }
+    });
+  }
+      
+        
+        
+      
   update(id: number, updateObjetoDto: UpdateObjetoDto) {
     return `This action updates a #${id} objeto`;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} objeto`;
+    return this.prisma.objeto.delete({
+      where: { id: id },
+    });
   }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateCursoDto } from './dto/create-curso.dto';
 import { UpdateCursoDto } from './dto/update-curso.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Aluno } from 'src/alunos/entities/aluno.entity';
 
 @Injectable()
 export class CursosService {
@@ -26,6 +27,13 @@ export class CursosService {
       },
     });
   }
+  getCursosPorOrdemABC() {
+    return this.prisma.curso.findMany({
+      orderBy: {
+        nome: 'asc',
+      },
+    });
+  }
 
   getTurmasPorCurso(cursoId: number) {
     return this.prisma.curso.findUnique({
@@ -34,6 +42,21 @@ export class CursosService {
         turmas: {
           select: {
             turma: true,
+          },
+        },
+      },
+    });
+  }
+
+ 
+
+  getAlunosPorCurso(cursoId: number) {
+    return this.prisma.curso.findUnique({
+      where: { id: cursoId },
+      include: {
+        turmas: {
+          select: {
+            turma: {},
           },
         },
       },

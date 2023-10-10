@@ -9,22 +9,44 @@ export class AcessosService {
   constructor(private prisma: PrismaService) {}
 
   create(createAcessoDto: CreateAcessoDto) {
-    return 'This action adds a new acesso';
+    return this.prisma.acesso.create({data: {
+     descricao: createAcessoDto.descricao,
+     data_hora_entrada: createAcessoDto.data_hora_entrada,
+     data_hora_saida: createAcessoDto.data_hora_saida,
+     aluno: {
+      connect: {
+        id: createAcessoDto.aluno_id
+      }
+    },
+    solicitacao: {
+      connect: {
+        id: createAcessoDto.solicitacao_id
+      }
+    },
+    }
+    });
   }
 
   findAll() {
-    return `This action returns all acessos`;
+    return this.prisma.acesso.findMany({});
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} acesso`;
+    return this.prisma.acesso.findUnique({
+      where: { id: id}
+    });
   }
 
   update(id: number, updateAcessoDto: UpdateAcessoDto) {
-    return `This action updates a #${id} acesso`;
+    return this.prisma.acesso.update({
+      where: {id: id},
+      data: updateAcessoDto
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} acesso`;
+    return this.prisma.acesso.delete({
+      where: {id: id}
+    })
   }
 }

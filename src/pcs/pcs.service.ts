@@ -9,22 +9,37 @@ export class PcsService {
   constructor(private prisma: PrismaService) {}
 
   create(createPcDto: CreatePcDto) {
-    return 'This action adds a new pc';
+    return this.prisma.pc.create({data: createPcDto});
   }
 
   findAll() {
-    return `This action returns all pcs`;
+    return this.prisma.pc.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} pc`;
+  findOne(idPCs: number) {
+    return this.prisma.pc.findUnique({
+      where: {id: idPCs}
+    })
   }
-
+  getAcessoPC(idPCs: number){
+    return this.prisma.pc.findUnique({
+      where:{id: idPCs},
+      include:{
+      
+      }
+    })
+  }
+  
   update(id: number, updatePcDto: UpdatePcDto) {
-    return `This action updates a #${id} pc`;
+    return this.prisma.pc.update({ 
+      where: {id: id},
+      data: updatePcDto 
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} pc`;
+    return this.prisma.pc.delete({
+      where:{id: id}
+    });
   }
 }

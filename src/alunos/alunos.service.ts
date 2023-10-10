@@ -8,23 +8,42 @@ export class AlunosService {
 
   constructor(private prisma: PrismaService) {}
 
+
   create(createAlunoDto: CreateAlunoDto) {
-    return 'This action adds a new aluno';
+    return this.prisma.aluno.create({data: { 
+    nome: createAlunoDto.nome,
+    matricula: createAlunoDto.matricula,
+    email: createAlunoDto.email,
+    senha: createAlunoDto.senha, 
+    turma:  { 
+      connect: {
+        id: createAlunoDto.turma_id
+      }
+     },
+    }
+    });
   }
 
   findAll() {
-    return `This action returns all alunos`;
+    return this.prisma.aluno.findMany();
   }
-
+  // #### PARTE QUE ELTEREI. adicionei as pesquisas findAll, update, e remove ####
   findOne(id: number) {
-    return `This action returns a #${id} aluno`;
+    return this.prisma.aluno.findUnique({
+      where:  { id: id }
+    });
   }
 
   update(id: number, updateAlunoDto: UpdateAlunoDto) {
-    return `This action updates a #${id} aluno`;
+    return this.prisma.aluno.update({
+      where: { id: id },
+      data: updateAlunoDto
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} aluno`;
+    return this.prisma.aluno.delete({
+      where: { id: id }
+    });
   }
 }

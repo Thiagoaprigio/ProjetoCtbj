@@ -13,17 +13,51 @@ export class TurmasService {
   }
 
   findAll() {
-    return this.prisma.turma.findMany();
+    return this.prisma.turma.findMany({
+      include:{
+        cursos:{
+
+        }
+      }
+    });
+  }
+  getTurmasPorOrdem(){
+    return this.prisma.turma.findMany({
+      orderBy:{
+        nome: 'asc'
+      }
+    })
   }
 
-  findOne(id: number) {
+  findOne(idTurmas: number) {
+    return this.prisma.turma.findUnique({
+      where: {id: idTurmas}
+    });
   }
-  
+  getAlunosPorTurma(turmaId: number){
+    return this.prisma.turma.findUnique({
+      where:{id: turmaId},
+      include:{
+        alunos:{
+          select:{
+            turma: true
+          }
+         }
+        }
+      }
+    )
+  }
   update(id: number, updateTurmaDto: UpdateTurmaDto) {
-    return `This action updates a #${id} turma`;
+    return this.prisma.turma.update({
+      where:{id: id},
+      data: updateTurmaDto
+
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} turma`;
+    return this.prisma.turma.delete({
+      where: {id: id}
+    });
   }
 }
